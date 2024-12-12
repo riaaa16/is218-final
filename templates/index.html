@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>IS218 Final</title>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend>Basic Information</legend>
+
+            <label for="sender">Your Name</label>
+            <input type="text" id="sender" required>
+
+            <label for="recipient">Who are you attacking?</label>
+            <input type="text" id="recipient" autocomplete="off" required>
+
+            <div>
+                <h3>Choose your team</h3>
+
+                <input type="radio" id="Cats" value="cat" name="team" required>
+                <label for="Cats">Cats</label>
+
+                <input type="radio" id="Dogs" value="dog" name="team">
+                <label for="Dogs">Dogs</label>
+            </div>
+        </fieldset>
+
+        <label for="url">Enter the link to your attack:</label>
+        <input type="url" name="url" id="url" placeholder="https://example.com" autocomplete="off" required>
+
+        <fieldset>
+            <legend>Art Information</legend>
+            <div>
+                <h3>Size</h3>
+                <input type="radio" id="simple" value="0.5" name="size" autocomplete="off" required>
+                <label for="simple">Simple</label>
+
+                <input type="radio" id="portrait" value="1" name="size" autocomplete="off">
+                <label for="portrait">Portrait | Bust</label>
+
+                <input type="radio" id="half" value="1.5" name="size" autocomplete="off">
+                <label for="half">Half-body</label>
+
+                <input type="radio" id="full" value="2" name="size" autocomplete="off">
+                <label for="full">Full-body</label>
+            </div>
+            <div>
+                <h3>Finish</h3>
+                <input type="radio" id="sketch" value="5" name="finish" autocomplete="off" required>
+                <label for="sketch">Rough Sketch</label>
+
+                <input type="radio" id="lined" value="10" name="finish" autocomplete="off">
+                <label for="lined">Cleaned | Lined | Lineless</label>
+            </div>
+            <div>
+                <h3>Color</h3>
+                <input type="radio" id="noColor" value="0" name="color" autocomplete="off" required>
+                <label for="noColor">Uncolored</label>
+
+                <input type="radio" id="roughColor" value="5" name="color" autocomplete="off">
+                <label for="roughColor">Rough Color</label>
+
+                <input type="radio" id="paint" value="10" name="color" autocomplete="off">
+                <label for="paint">Clean color | Painted</label>
+            </div>
+            <div>
+                <h3>Shading</h3>
+                <input type="radio" id="noShade" value="0" name="shading" autocomplete="off" required>
+                <label for="noShade">Unshaded</label>
+
+                <input type="radio" id="minShade" value="5" name="shading" autocomplete="off">
+                <label for="minShade">Minimal Shading</label>
+
+                <input type="radio" id="fullShade" value="10" name="shading" autocomplete="off">
+                <label for="fullShade">Full Shading</label>
+            </div>
+            <div>
+                <h3>Background</h3>
+                <input type="radio" id="noBG" value="0" name="bg" autocomplete="off" required>
+                <label for="nogBG">No Background | Minimal | Photo</label>
+
+                <input type="radio" id="pattern" value="1" name="bg" autocomplete="off">
+                <label for="pattern">Pattern | Abstract</label>
+
+                <input type="radio" id="props" value="1.5" name="bg" autocomplete="off">
+                <label for="props">Props | Scene Elements | Design Layout</label>
+
+                <input type="radio" id="fullBG" value="2" name="bg" autocomplete="off">
+                <label for="fullBG">Full Scene</label>
+            </div>
+            <div>
+                <h3>Characters</h3>
+                <label for="numChars">Enter the number of characters in your drawing here:</label>
+                <input type="number" id="numChars" name="numChars" min="1" max="100" autocomplete="off" required>
+            </div>
+        </fieldset>
+        <input type="submit">
+    </form>
+
+    <div id="result"></div>
+</body>
+
+</html>
