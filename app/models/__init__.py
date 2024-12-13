@@ -18,7 +18,7 @@ class Attack(Base):
     timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     sender = Column(String(50), nullable=False)
     recipient = Column(String(50), nullable=False)
-    team = Column(String(4), nullable=False)
+    team = Column(String(3), nullable=False)
     link = Column(String(2000), nullable=False)
     finish = Column(Float, nullable=False)
     color = Column(Float, nullable=False)
