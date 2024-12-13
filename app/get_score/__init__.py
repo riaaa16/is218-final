@@ -78,7 +78,7 @@ class Score:
             if value not in scoreMap[category]:
                 raise KeyError(f"Invalid or missing option for {category}: {value}")
 
-        # Check character count
+        # Check character count | LYBYL
         if (
             not isinstance(self.num_chars, (int, float))
             or self.num_chars <= 0
@@ -88,6 +88,8 @@ class Score:
                 "Please use whole numbers for the character count. " +
                 "The character count must be greater than 0."
                 )
+        # if Positive Whole Number, convert into an int
+        self.num_chars = int(self.num_chars)
 
 scoreMap = {
     # Nested Dictionary with the defined options for each param
