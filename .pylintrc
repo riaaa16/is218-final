@@ -1,0 +1,3 @@
+[MESSAGES CONTROL]
+# Disable the too-few-public-methods warning
+disable=too-few-public-methods
