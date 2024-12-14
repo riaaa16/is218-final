@@ -18,4 +18,4 @@ class Attack(BaseModel):
     bg: Number              # should be a int | float
     size: Number            # should be a int | float
     num_chars: PositiveInt  # should be a positive integer
-    result: Number          # should be a int | float
+    score: Number          # should be a int | float
