@@ -1,3 +1,7 @@
+'''
+Fixtures to run SQLAlchemy database tests on a local scale 
+(using in-memory database)
+'''
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker

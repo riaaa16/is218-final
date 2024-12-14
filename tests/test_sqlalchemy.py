@@ -1,6 +1,8 @@
+'''Tests app.models by creating an attack in the database'''
 from app.models import Attack
 
-def test_create_user(db_session):
+def test_create_attack(db_session):
+    '''Creating an attack in the database'''
     attack = Attack(
         sender = "Mary",
         recipient = "Sue",
