@@ -3,6 +3,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, PositiveInt, AnyHttpUrl, Field, field_validator
 import uvicorn
 from app.get_score import Number, Score
+from app.schemas import Attack
 
 app = FastAPI() # Creating FastAPI instance
 
@@ -10,7 +11,10 @@ website = Jinja2Templates(directory="templates")
 
 class AttackRequest(BaseModel):
     '''Pydantic model for attack request data'''
-
+    sender: str = Field(description="Sender's name")
+    recipient: str = Field(description="Recipient's name")
+    team: str = Field(description="Sender's team")
+    link: AnyHttpUrl = Field(description="Attack's link")
     finish: Number = Field(description="Attack's finish")
     color: Number = Field(description="Attack's color")
     shading: Number = Field(description="Attack's shading")
@@ -54,6 +58,7 @@ async def read_root(request : Request):
 async def calculate_score(form_input: AttackRequest):
     '''Gets score for form inputs'''
     try:
+        # Calculate score
         score = Score(
             form_input.finish,
             form_input.color,
@@ -62,6 +67,23 @@ async def calculate_score(form_input: AttackRequest):
             form_input.size,
             form_input.num_chars
             ).calculate()
+        '''
+        # Create attack to store in database
+        attack = Attack(
+            form_input.sender,
+            form_input.recipient,
+            form_input.team,
+            form_input.link,
+            Score.finish,
+            Score.color,
+            Score.shading,
+            Score.bg,
+            Score.size,
+            Score.num_chars,
+            score
+        )
+        '''
+        # Return calculated score to index.html
         return AttackScore(score=score)
     except Exception as e:
         # Raise error
