@@ -9,9 +9,9 @@ from app.get_score import Score, scoreMap
 
 # Valid input test cases
 valid_inputs = [
-    (10, 5, 10, 2, 1.5, 3),  # All valid inputs
-    (5, 0, 5, 0, 0.5, 1),    # Minimum valid inputs
-    (10, 10, 10, 2, 2, 5),   # Maximum valid inputs
+    (10, 5, 10, 20, 1.5, 3),  # All valid inputs
+    (5, 0, 5, 10, 0.5, 1),    # Minimum valid inputs
+    (10, 10, 10, 20, 2, 5),   # Maximum valid inputs
 ]
 
 # Invalid input test cases

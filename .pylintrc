@@ -1,0 +1,3 @@
+[MESSAGES CONTROL]
+# Disable the following warnings
+disable = too-few-public-methods, redefined-outer-name, too-many-arguments, too-many-positional-arguments

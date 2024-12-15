@@ -12,10 +12,10 @@
             <legend>Basic Information</legend>
 
             <label for="sender">Your Name</label>
-            <input type="text" id="sender" required>
+            <input type="text" id="sender" maxlength="50" required>
 
             <label for="recipient">Who are you attacking?</label>
-            <input type="text" id="recipient" autocomplete="off" required>
+            <input type="text" id="recipient" maxlength="50" autocomplete="off" required>
 
             <div>
                 <h3>Choose your team</h3>
@@ -28,8 +28,8 @@
             </div>
         </fieldset>
 
-        <label for="url">Enter the link to your attack:</label>
-        <input type="url" name="url" id="url" placeholder="https://example.com" autocomplete="off" required>
+        <label for="link">Enter the link to your attack:</label>
+        <input type="url" name="link" id="link" placeholder="https://example.com" autocomplete="off" required>
 
         <fieldset>
             <legend>Art Information</legend>
@@ -82,25 +82,110 @@
                 <input type="radio" id="noBG" value="0" name="bg" autocomplete="off" required>
                 <label for="nogBG">No Background | Minimal | Photo</label>
 
-                <input type="radio" id="pattern" value="1" name="bg" autocomplete="off">
+                <input type="radio" id="pattern" value="5" name="bg" autocomplete="off">
                 <label for="pattern">Pattern | Abstract</label>
 
-                <input type="radio" id="props" value="1.5" name="bg" autocomplete="off">
+                <input type="radio" id="props" value="10" name="bg" autocomplete="off">
                 <label for="props">Props | Scene Elements | Design Layout</label>
 
-                <input type="radio" id="fullBG" value="2" name="bg" autocomplete="off">
+                <input type="radio" id="fullBG" value="20" name="bg" autocomplete="off">
                 <label for="fullBG">Full Scene</label>
             </div>
             <div>
                 <h3>Characters</h3>
-                <label for="numChars">Enter the number of characters in your drawing here:</label>
-                <input type="number" id="numChars" name="numChars" min="1" max="100" autocomplete="off" required>
+                <label for="num_chars">Enter the number of characters in your drawing here:</label>
+                <input type="number" id="num_chars" name="num_chars" min="1" max="100" autocomplete="off" required>
             </div>
         </fieldset>
-        <input type="submit">
+        <!--SUBMIT BUTTON-->
+        <input type="submit" value="Submit">
     </form>
 
     <div id="result"></div>
+
+<!--JAVASCRIPT-->
+<script>
+    // JavaScript for form validation and score calculation
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            console.log("Checking form submission.");
+            // Check that all required fields were filled out
+            if (!form.checkValidity()) {
+                // Log invalid response to console if otherwise
+                console.log(form.reportValidity());
+            }
+            console.log("All required fields were filled.");
+
+            console.log("Retrieving form input.")
+            // Get form data
+            const sender = form.sender.value.trim();
+            const recipient = form.recipient.value.trim();
+            const team = form.team.value;
+            const link = form.link.value.trim();
+            const finish = parseFloat(form.finish.value);
+            const color = parseFloat(form.color.value);
+            const shading = parseFloat(form.shading.value);
+            const bg = parseFloat(form.bg.value);
+            const size = parseFloat(form.size.value);
+            const num_chars = parseInt(form.num_chars.value, 10);
+
+            // Call the calculateScore function with the retrieved values
+            calculateScore(sender, recipient, team, link, finish, color, shading, bg, size, num_chars);
+
+            console.log("Resetting form inputs.");
+            form.reset();
+        });
+    });
+
+    async function calculateScore(sender, recipient, team, link, finish, color, shading, bg, size, num_chars) {
+        // Get result
+        const result = document.getElementById('result');
+
+        try {
+            console.log("Sending form input to FastAPI.");
+
+            const response = await fetch('/score', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    sender: sender,
+                    recipient: recipient,
+                    team: team,
+                    link: link,
+                    finish: finish,
+                    color: color,
+                    shading: shading,
+                    bg: bg,
+                    size: size,
+                    num_chars: num_chars
+                })
+            });
+
+            const data = await response.json();
+
+            console.log("Response Status:", response.status);
+            console.log("Calculated Score:", data.score);
+
+            if (response.ok) {
+                console.log("Response successful.");
+                result.innerText = `${sender} attacked ${recipient} for ${data.score} points!`;
+            } else {
+                console.error("Response failed.");
+                result.innerText = `Error: ${data.detail || 'Something went wrong.'}`;
+            }
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+            result.innerText = `Error: ${error.message}`;
+        }
+
+    }
+</script>
+
 </body>
 
 </html>
