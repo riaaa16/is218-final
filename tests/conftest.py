@@ -1,11 +1,23 @@
 '''
-Fixtures to run SQLAlchemy database tests on a local scale 
+- Fixtures to run SQLAlchemy database tests on a local scale 
 (using in-memory database)
+- Fixture to run FastAPI tests.
 '''
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from fastapi.testclient import TestClient
 from app.models import Base
+from main import app
+
+@pytest.fixture(scope="session")
+def client():
+    '''
+    Fixture creating a TestClient for FastAPI
+    Scope is per pytest
+    '''
+    with TestClient(app) as client:
+        yield client # Let test functions use TestClient instance
 
 @pytest.fixture(scope="session")
 def engine():
