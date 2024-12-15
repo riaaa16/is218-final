@@ -110,9 +110,9 @@ scoreMap = {
     },
     "background" : {
         0 : "No Background | Minimal | Photo",
-        1 : "Pattern | Abstract",
-        1.5 : "Props | Scene Elements | Design Layout",
-        2 : "Full Scene"
+        5 : "Pattern | Abstract",
+        10 : "Props | Scene Elements | Design Layout",
+        20 : "Full Scene"
     },
     "size" : {
         0.5 : "Simple",
