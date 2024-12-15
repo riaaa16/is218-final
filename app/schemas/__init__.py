@@ -1,5 +1,5 @@
 '''Validates input for database'''
-from pydantic import BaseModel, PositiveInt, AnyHttpUrl
+from pydantic import BaseModel, PositiveInt, AnyHttpUrl, Field
 from app.get_score import Number
 
 class Attack(BaseModel):
@@ -8,14 +8,14 @@ class Attack(BaseModel):
     in the database.
     '''
 
-    sender: str             # should be a string
-    recipient: str          # should be a string
-    team: str               # should be a string
-    link: AnyHttpUrl        # should be https | https, TLD not required, host required
-    finish: Number          # should be a int | float
-    color: Number           # should be a int | float
-    shading: Number         # should be a int | float
-    bg: Number              # should be a int | float
-    size: Number            # should be a int | float
-    num_chars: PositiveInt  # should be a positive integer
-    score: Number          # should be a int | float
+    sender: str = Field(description="Sender's name")
+    recipient: str = Field(description="Recipient's name")
+    team: str = Field(description="Sender's team")
+    link: AnyHttpUrl = Field(description="Attack's link")
+    finish: Number = Field(description="Attack's finish")
+    color: Number = Field(description="Attack's color")
+    shading: Number = Field(description="Attack's shading")
+    bg: Number = Field(description="Attack's background")
+    size: Number = Field(description="Attack'size")
+    num_chars: PositiveInt = Field(description="Attack's character count")
+    score: Number = Field(description="Attack's score")
