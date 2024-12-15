@@ -31,6 +31,7 @@ jobs:
 
       - name: Run tests with pytest and enforce 100% coverage
         run: |
+          source venv/bin/activate
           pytest --cov=app --cov-fail-under=90
 
 # pytest --cov=app --cov-fail-under=90
