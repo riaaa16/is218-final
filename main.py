@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
@@ -7,27 +6,23 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, PositiveInt, AnyHttpUrl, Field, field_validator
 import uvicorn
 from app.get_score import Number, Score
-from app.schemas import Attack
+from app.models import Attack, Base
 
 app = FastAPI() # Creating FastAPI instance
 
 website = Jinja2Templates(directory="templates")
 
-# Get the environment variables
+# Load the DATABASE_URL directly from the environment
+# DATABSE_URL is created in docker-compose.yml
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-load_dotenv()
+# Create the database engine using the DATABASE_URL
+engine = create_engine(DATABASE_URL)
 
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
+# Create tables in the database if they do not exist
+Base.metadata.create_all(bind=engine)
 
-# Construct the database URL using the environment variables
-DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-# Create engine and session maker
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+# Create session maker
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():
@@ -102,7 +97,7 @@ async def calculate_score(form_input: AttackRequest, db = Depends(get_db)):
             sender=form_input.sender,
             recipient=form_input.recipient,
             team=form_input.team,
-            link=form_input.link,
+            link=str(form_input.link),
             finish=form_input.finish,
             color=form_input.color,
             shading=form_input.shading,
