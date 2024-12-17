@@ -1,6 +1,7 @@
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, PositiveInt, AnyHttpUrl, Field, field_validator
@@ -12,9 +13,15 @@ app = FastAPI() # Creating FastAPI instance
 
 website = Jinja2Templates(directory="templates")
 
-# Load the DATABASE_URL directly from the environment
-# DATABSE_URL is created in docker-compose.yml
-DATABASE_URL = os.getenv("DATABASE_URL")
+load_dotenv()
+
+# Defaults to "True" if .env cannot be found
+if os.getenv("TEST_MODE", "True") == "True":
+    DATABASE_URL = "sqlite:///:memory:"
+else:
+    # Load the DATABASE_URL directly from the environment
+    # DATABSE_URL is created in docker-compose.yml
+    DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Create the database engine using the DATABASE_URL
 engine = create_engine(DATABASE_URL)
