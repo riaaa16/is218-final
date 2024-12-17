@@ -3,7 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width-device-width", intial-scale="1">
     <title>IS218 Final</title>
+    <style>
+        legend {
+            margin: auto;
+            padding 0 2em;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,11 +32,11 @@
 
                 <input type="radio" id="Dogs" value="dog" name="team">
                 <label for="Dogs">Dogs</label>
+
+                <label for="link">Enter the link to your attack:</label>
+                <input type="url" name="link" id="link" placeholder="https://example.com" autocomplete="off" required>
             </div>
         </fieldset>
-
-        <label for="link">Enter the link to your attack:</label>
-        <input type="url" name="link" id="link" placeholder="https://example.com" autocomplete="off" required>
 
         <fieldset>
             <legend>Art Information</legend>
@@ -103,88 +110,88 @@
 
     <div id="result"></div>
 
-<!--JAVASCRIPT-->
-<script>
-    // JavaScript for form validation and score calculation
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.querySelector("form");
+    <!--JAVASCRIPT-->
+    <script>
+        // JavaScript for form validation and score calculation
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("form");
 
-        form.addEventListener("submit", (event) => {
-            event.preventDefault(); // Prevent default form submission
+            form.addEventListener("submit", (event) => {
+                event.preventDefault(); // Prevent default form submission
 
-            console.log("Checking form submission.");
-            // Check that all required fields were filled out
-            if (!form.checkValidity()) {
-                // Log invalid response to console if otherwise
-                console.log(form.reportValidity());
-            }
-            console.log("All required fields were filled.");
+                console.log("Checking form submission.");
+                // Check that all required fields were filled out
+                if (!form.checkValidity()) {
+                    // Log invalid response to console if otherwise
+                    console.log(form.reportValidity());
+                }
+                console.log("All required fields were filled.");
 
-            console.log("Retrieving form input.")
-            // Get form data
-            const sender = form.sender.value.trim();
-            const recipient = form.recipient.value.trim();
-            const team = form.team.value;
-            const link = form.link.value.trim();
-            const finish = parseFloat(form.finish.value);
-            const color = parseFloat(form.color.value);
-            const shading = parseFloat(form.shading.value);
-            const bg = parseFloat(form.bg.value);
-            const size = parseFloat(form.size.value);
-            const num_chars = parseInt(form.num_chars.value, 10);
+                console.log("Retrieving form input.")
+                // Get form data
+                const sender = form.sender.value.trim();
+                const recipient = form.recipient.value.trim();
+                const team = form.team.value;
+                const link = form.link.value.trim();
+                const finish = parseFloat(form.finish.value);
+                const color = parseFloat(form.color.value);
+                const shading = parseFloat(form.shading.value);
+                const bg = parseFloat(form.bg.value);
+                const size = parseFloat(form.size.value);
+                const num_chars = parseInt(form.num_chars.value, 10);
 
-            // Call the calculateScore function with the retrieved values
-            calculateScore(sender, recipient, team, link, finish, color, shading, bg, size, num_chars);
+                // Call the calculateScore function with the retrieved values
+                calculateScore(sender, recipient, team, link, finish, color, shading, bg, size, num_chars);
 
-            console.log("Resetting form inputs.");
-            form.reset();
-        });
-    });
-
-    async function calculateScore(sender, recipient, team, link, finish, color, shading, bg, size, num_chars) {
-        // Get result
-        const result = document.getElementById('result');
-
-        try {
-            console.log("Sending form input to FastAPI.");
-
-            const response = await fetch('/score', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    sender: sender,
-                    recipient: recipient,
-                    team: team,
-                    link: link,
-                    finish: finish,
-                    color: color,
-                    shading: shading,
-                    bg: bg,
-                    size: size,
-                    num_chars: num_chars
-                })
+                console.log("Resetting form inputs.");
+                form.reset();
             });
+        });
 
-            const data = await response.json();
+        async function calculateScore(sender, recipient, team, link, finish, color, shading, bg, size, num_chars) {
+            // Get result
+            const result = document.getElementById('result');
 
-            console.log("Response Status:", response.status);
-            console.log("Calculated Score:", data.score);
+            try {
+                console.log("Sending form input to FastAPI.");
 
-            if (response.ok) {
-                console.log("Response successful.");
-                result.innerText = `${sender} attacked ${recipient} for ${data.score} points!`;
-            } else {
-                console.error("Response failed.");
-                result.innerText = `Error: ${data.detail || 'Something went wrong.'}`;
+                const response = await fetch('/score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sender: sender,
+                        recipient: recipient,
+                        team: team,
+                        link: link,
+                        finish: finish,
+                        color: color,
+                        shading: shading,
+                        bg: bg,
+                        size: size,
+                        num_chars: num_chars
+                    })
+                });
+
+                const data = await response.json();
+
+                console.log("Response Status:", response.status);
+                console.log("Calculated Score:", data.score);
+
+                if (response.ok) {
+                    console.log("Response successful.");
+                    result.innerText = `${sender} attacked ${recipient} for ${data.score} points!`;
+                } else {
+                    console.error("Response failed.");
+                    result.innerText = `Error: ${data.detail || 'Something went wrong.'}`;
+                }
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                result.innerText = `Error: ${error.message}`;
             }
 
-        } catch (error) {
-            console.error('Fetch error:', error);
-            result.innerText = `Error: ${error.message}`;
         }
-
-    }
-</script>
+    </script>
 
 </body>
 
