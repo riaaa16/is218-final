@@ -88,8 +88,7 @@ class Score:
                 "Please use whole numbers for the character count. " +
                 "The character count must be greater than 0."
                 )
-        # if Positive Whole Number, convert into an int
-        self.num_chars = int(self.num_chars)
+
 
 scoreMap = {
     # Nested Dictionary with the defined options for each param

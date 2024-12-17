@@ -21,6 +21,10 @@ jobs:
         with:
           python-version: '3.x'  # Set your desired Python version
 
+      - name: Create .env file
+        run: |
+          echo "TEST_MODE=True" > .env
+
       - name: Install dependencies from requirements.txt
         run: |
           python -m venv venv
