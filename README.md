@@ -1,11 +1,16 @@
 # IS218 Final
 
+## Video Link
+I do not usually talk this slow, but my brain is struggling to put together words while being sick.
+
+[https://youtu.be/7PnVFw_Z4gc?si=5gvvCaWs4X1IoMEM
+](https://youtu.be/7PnVFw_Z4gc?si=5gvvCaWs4X1IoMEM)
 ## About
-During the summer, I run an online art-exchange event where participants draw gifts for each other. These gifts are called **'attacks'**. Each attack is scored to earn points for your team. The event runs for one month, and at the end of the month, the points are tallied and the winning team is announced.
+During the summer, I run an online art-exchange event where participants draw gifts for each other. These gifts are called **'attacks'**. Each person scores their attack to earn points for their team. The event runs for one month, and at the end of the month, the points are tallied and the winning team is announced.
 
-Typically, we use a form service and Google Sheets to collect data and perform calculations.
+For this final project, I decided to recreate the form that we use for scoring. Once you hit submit, your score is calculated and returned to the form, and all of your form information is stored in a PostgreSQL database.
 
-For this final project, I decided to recreate the form we use. The information entered in the form is scored and sent to a PostgreSQL database.
+The cat image came from [here](https://store.line.me/stickershop/product/16919130/en) and the dog image came from [here](https://store.line.me/stickershop/product/15939506/en).
 
 ## Installation
 
