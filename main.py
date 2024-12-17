@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, PositiveInt, AnyHttpUrl, Field, field_validator
 import uvicorn
@@ -10,6 +11,8 @@ from app.get_score import Number, Score
 from app.models import Attack, Base
 
 app = FastAPI() # Creating FastAPI instance
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 website = Jinja2Templates(directory="templates")
 
