@@ -1,107 +1,368 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IS218 Final</title>
+    <!--IMPORT FONT-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet">
+    <!--CSS-->
+    <style>
+        /*BODY*/
+        body {
+            padding: 3em;
+            font-size: 1.25em;
+            font-family: "Inter", sans-serif;
+        }
+
+        /*FIELDSET*/
+        fieldset {
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        /*LEGEND*/
+        legend {
+            margin: auto;
+            padding: 0 1em;
+            font-size: 1.75em;
+        }
+
+        /*H3*/
+        h3 {
+            font-size: 1.25em;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        /*INPUTS*/
+        input {
+            font-size: 1.25em;
+            margin-top: 0.5em;
+        }
+
+        /*SUBMIT BUTTON*/
+        input[type=submit] {
+            margin: 1em 0;
+            padding: 0.5em 0;
+            width: 100%;
+            font-size: 1.5em;
+            font-weight: bold;
+            background-color: seagreen;
+            border: 0.25em solid seagreen;
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out; /* Smooth hover effects */
+        }
+
+        /*SUBMIT BUTTON HOVER*/
+        input[type=submit]:hover {
+            background-color: white;
+            color: seagreen;
+        }
+
+        /*LINK LABEL*/
+        label[for="link"], label[for="num_chars"] {
+            font-size: 1.25em;
+            display: block; /* Ensure label is a block-level element */
+            margin: 2em 0 0.75em; /* Add space below the label */
+            text-align: center;
+        }
+
+        /*URL AND NUMBER INPUT*/
+        input[type="url"], input[type="number"] {
+            display: block;
+            width: 100%;
+            padding: 0.75em;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 0.5em;
+        }
+
+        /*CENTER NUMBER INPUT*/
+        input[type="number"] {
+            text-align: center;
+        }
+
+        /*FLEX-CONTAINER FOR SENDER & RECIPIENT*/
+        .flex-con {
+            margin-top: 1em;
+            display: flex;
+            flex-direction: row;
+            gap: 2em;
+        }
+
+        /*ALIGN TEXT*/
+        .fl-item, .fr-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        /*STYLE TEXT INPUTS*/
+        .fl-item > input[type=text], .fr-item > input[type=text] {
+            width: 100%;
+            border-radius: 5px;
+
+            padding: 0.5em;
+            border: 2px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /*CHANGE LABELS' FONT-SIZE*/
+        .fl-item > label, .fr-item > label {
+            font-size: 1.25em;
+        }
+
+        /*MAKE RADIO BUTTONS BLOCK*/
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: .5em;
+            text-align: center;
+        }
+
+        /* HIDE DEFAULT RADIO BUTTON */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* STYLE RADIO BUTTONS */
+        .radio-group > label {
+            display: block;
+            padding: 0.75em;
+            background-color: white;
+            color: cornflowerblue;
+            text-align: center;
+            font-weight: bold;
+            border: 0.25em solid cornflowerblue;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* SELECTED RADIO BUTTON */
+        .radio-group > input:checked + label {
+            background-color: cornflowerblue;
+            border-color: cornflowerblue;
+            color: white;
+        }
+
+        /* RADIO BUTTON HOVER */
+        .radio-group > label:hover {
+            background-color: #d8e6ff;
+        }
+
+        .radio-group > h3 {
+            margin: 1.5em 0 0.25em;
+            padding: 0 0;
+        }
+
+        /*TEAM IMAGE RADIO*/
+        .team {
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .team label {
+            cursor: pointer;
+            position: relative;
+            flex: 1;
+            box-sizing: border-box;
+        }
+
+        .team > label > img {
+            width: 100%;
+            border-style: solid;
+            border-width: 0.25em;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out; /* Smooth hover effects */
+        }
+
+        .team > label[for="Dogs"] {
+            padding-right: 0.5em;
+        }
+
+        .team > label[for="Cats"] > img {
+            border-color: mediumpurple;
+        }
+
+        .team > label[for="Dogs"] > img {
+            border-color: palevioletred;
+        }
+
+        /*ADD SHADOW ON CHECK*/
+        .team input[type="radio"]:checked + img {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /*ADD BG COLOR ON CHECK*/
+        .team input[value="cat"]:checked + img {
+            background-color: #dfd3fc;
+        }
+
+        .team input[value="dog"]:checked + img {
+            background-color: #ffd7e3;
+        }
+
+        /*ENLARGE ON HOVER*/
+        .team label:hover img {
+            transform: scale(1.05); /* Enlarge the image on hover */
+        }
+
+        #result {
+            text-align: center;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                padding: 0.5em;
+            }
+
+            fieldset {
+                padding: 2em;
+            }
+
+            .flex-con {
+                flex-direction: column;
+            }
+
+            .fl-item > input, .fr-item > input {
+                width: 100%;
+            }
+
+            .team {
+                flex-direction: column;
+            }
+
+            .team > label[for="Dogs"] {
+                padding-right: 0;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
-    <form>
-        <fieldset>
-            <legend>Basic Information</legend>
-
-            <label for="sender">Your Name</label>
-            <input type="text" id="sender" maxlength="50" required>
-
-            <label for="recipient">Who are you attacking?</label>
-            <input type="text" id="recipient" maxlength="50" autocomplete="off" required>
-
-            <div>
-                <h3>Choose your team</h3>
-
-                <input type="radio" id="Cats" value="cat" name="team" required>
-                <label for="Cats">Cats</label>
-
-                <input type="radio" id="Dogs" value="dog" name="team">
-                <label for="Dogs">Dogs</label>
+<form>
+    <!--BASIC INFO-->
+    <fieldset>
+        <legend>✦ Basic Info ✦</legend>
+        <div class="flex-con">
+            <!--SENDER-->
+            <div class="fl-item">
+                <label for="sender">Your Name</label>
+                <input type="text" id="sender" maxlength="50" required>
             </div>
-        </fieldset>
-
-        <label for="link">Enter the link to your attack:</label>
-        <input type="url" name="link" id="link" placeholder="https://example.com" autocomplete="off" required>
-
-        <fieldset>
-            <legend>Art Information</legend>
-            <div>
-                <h3>Size</h3>
-                <input type="radio" id="simple" value="0.5" name="size" autocomplete="off" required>
-                <label for="simple">Simple</label>
-
-                <input type="radio" id="portrait" value="1" name="size" autocomplete="off">
-                <label for="portrait">Portrait | Bust</label>
-
-                <input type="radio" id="half" value="1.5" name="size" autocomplete="off">
-                <label for="half">Half-body</label>
-
-                <input type="radio" id="full" value="2" name="size" autocomplete="off">
-                <label for="full">Full-body</label>
+            <!--RECIPIENT-->
+            <div class="fr-item">
+                <label for="recipient">Who are you attacking?</label>
+                <input type="text" id="recipient" maxlength="50" autocomplete="off" required>
             </div>
-            <div>
-                <h3>Finish</h3>
-                <input type="radio" id="sketch" value="5" name="finish" autocomplete="off" required>
-                <label for="sketch">Rough Sketch</label>
+        </div>
+        <!--TEAM-->
+        <h3>Choose your team</h3>
+        <div class="team">
+            <label for="Cats">
+                <input type="radio" id="Cats" value="cat" name="team" autocomplete="off" required>
+                <img src="../static/cat.png" alt="Cat">
+            </label>
 
-                <input type="radio" id="lined" value="10" name="finish" autocomplete="off">
-                <label for="lined">Cleaned | Lined | Lineless</label>
-            </div>
-            <div>
-                <h3>Color</h3>
-                <input type="radio" id="noColor" value="0" name="color" autocomplete="off" required>
-                <label for="noColor">Uncolored</label>
+            <label for="Dogs">
+                <input type="radio" id="Dogs" value="dog" name="team" autocomplete="off">
+                <img src="../static/dog.png" alt="Dog">
+            </label>
+        </div>
+        <!--LINK-->
+        <div>
+            <label for="link">Enter the link to your attack:</label>
+            <input type="url" name="link" id="link" placeholder="https://example.com" autocomplete="off" required>
+        </div>
+    </fieldset>
+    <!--ART INFO-->
+    <fieldset>
+        <legend>✦ Art Info ✦</legend>
+        <!--SIZE-->
+        <div class="radio-group">
+            <h3>Size</h3>
+            <input type="radio" id="simple" value="0.5" name="size" autocomplete="off" required>
+            <label for="simple">Simple</label>
 
-                <input type="radio" id="roughColor" value="5" name="color" autocomplete="off">
-                <label for="roughColor">Rough Color</label>
+            <input type="radio" id="portrait" value="1" name="size" autocomplete="off">
+            <label for="portrait">Portrait | Bust</label>
 
-                <input type="radio" id="paint" value="10" name="color" autocomplete="off">
-                <label for="paint">Clean color | Painted</label>
-            </div>
-            <div>
-                <h3>Shading</h3>
-                <input type="radio" id="noShade" value="0" name="shading" autocomplete="off" required>
-                <label for="noShade">Unshaded</label>
+            <input type="radio" id="half" value="1.5" name="size" autocomplete="off">
+            <label for="half">Half-body</label>
 
-                <input type="radio" id="minShade" value="5" name="shading" autocomplete="off">
-                <label for="minShade">Minimal Shading</label>
+            <input type="radio" id="full" value="2" name="size" autocomplete="off">
+            <label for="full">Full-body</label>
+        </div>
+        <!--FINISH-->
+        <div class="radio-group">
+            <h3>Finish</h3>
+            <input type="radio" id="sketch" value="5" name="finish" autocomplete="off" required>
+            <label for="sketch">Rough Sketch</label>
 
-                <input type="radio" id="fullShade" value="10" name="shading" autocomplete="off">
-                <label for="fullShade">Full Shading</label>
-            </div>
-            <div>
-                <h3>Background</h3>
-                <input type="radio" id="noBG" value="0" name="bg" autocomplete="off" required>
-                <label for="nogBG">No Background | Minimal | Photo</label>
+            <input type="radio" id="lined" value="10" name="finish" autocomplete="off">
+            <label for="lined">Cleaned | Lined | Lineless</label>
+        </div>
+        <!--COLOR-->
+        <div class="radio-group">
+            <h3>Color</h3>
+            <input type="radio" id="noColor" value="0" name="color" autocomplete="off" required>
+            <label for="noColor">Uncolored</label>
 
-                <input type="radio" id="pattern" value="5" name="bg" autocomplete="off">
-                <label for="pattern">Pattern | Abstract</label>
+            <input type="radio" id="roughColor" value="5" name="color" autocomplete="off">
+            <label for="roughColor">Rough Color</label>
 
-                <input type="radio" id="props" value="10" name="bg" autocomplete="off">
-                <label for="props">Props | Scene Elements | Design Layout</label>
+            <input type="radio" id="paint" value="10" name="color" autocomplete="off">
+            <label for="paint">Clean color | Painted</label>
+        </div>
+        <!--SHADING-->
+        <div class="radio-group">
+            <h3>Shading</h3>
+            <input type="radio" id="noShade" value="0" name="shading" autocomplete="off" required>
+            <label for="noShade">Unshaded</label>
 
-                <input type="radio" id="fullBG" value="20" name="bg" autocomplete="off">
-                <label for="fullBG">Full Scene</label>
-            </div>
-            <div>
-                <h3>Characters</h3>
-                <label for="num_chars">Enter the number of characters in your drawing here:</label>
-                <input type="number" id="num_chars" name="num_chars" min="1" max="100" autocomplete="off" required>
-            </div>
-        </fieldset>
-        <!--SUBMIT BUTTON-->
-        <input type="submit" value="Submit">
-    </form>
+            <input type="radio" id="minShade" value="5" name="shading" autocomplete="off">
+            <label for="minShade">Minimal Shading</label>
 
-    <div id="result"></div>
+            <input type="radio" id="fullShade" value="10" name="shading" autocomplete="off">
+            <label for="fullShade">Full Shading</label>
+        </div>
+        <!--BACKGROUND-->
+        <div class="radio-group">
+            <h3>Background</h3>
+            <input type="radio" id="noBG" value="0" name="bg" autocomplete="off" required>
+            <label for="noBG">No Background | Minimal | Photo</label>
+
+            <input type="radio" id="pattern" value="5" name="bg" autocomplete="off">
+            <label for="pattern">Pattern | Abstract</label>
+
+            <input type="radio" id="props" value="10" name="bg" autocomplete="off">
+            <label for="props">Props | Scene Elements | Design Layout</label>
+
+            <input type="radio" id="fullBG" value="20" name="bg" autocomplete="off">
+            <label for="fullBG">Full Scene</label>
+        </div>
+        <!--CHARACTERS-->
+        <div>
+            <label for="num_chars">Enter the number of characters in your drawing here:</label>
+            <input type="number" id="num_chars" name="num_chars" min="1" max="100" autocomplete="off" required>
+        </div>
+    </fieldset>
+    <!--SUBMIT BUTTON-->
+    <input type="submit" value="SUBMIT">
+</form>
+<!--RESULT-->
+<div id="result"></div>
 
 <!--JAVASCRIPT-->
 <script>
